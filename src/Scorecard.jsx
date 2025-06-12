@@ -1,0 +1,1 @@
+(Scorecard.jsx content already provided in previous steps)
