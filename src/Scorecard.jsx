@@ -187,7 +187,7 @@ export default function Scorecard({ responses, questions, noteSuggestions }) {
       <div className="mt-6 mb-4">
         <div className="p-4 border border-blue-300 bg-blue-50 rounded">
           <h2 className="font-semibold mb-2 text-blue-800 text-center">
-            Suggestions based on your comments:
+            What you said:
           </h2>
           {noteSuggestions?.length > 0 ? (
             <ul className="list-disc pl-6 text-sm text-blue-800">
@@ -205,7 +205,7 @@ export default function Scorecard({ responses, questions, noteSuggestions }) {
 
       {isLoadingAdvice && (
         <div className="mt-6 mb-4 p-4 border border-yellow-300 bg-yellow-50 rounded text-yellow-800 text-sm text-center">
-          🔄 Analyzing your comments for clinical advice...
+          🔄 Analyzing your comments for expert advice...
         </div>
       )}
 
@@ -221,7 +221,7 @@ export default function Scorecard({ responses, questions, noteSuggestions }) {
                 <br />
                 🔍 <em>{item.classification}</em> — {item.explanation}
                 <br />
-                🩺 <strong>Doctor advice:</strong> {item.doctor_advice}
+                🩺 <strong>Expert Advice:</strong> {item.doctor_advice}
               </li>
             ))}
           </ul>
