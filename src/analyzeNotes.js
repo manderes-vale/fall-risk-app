@@ -2,7 +2,7 @@ import OpenAI from "openai";
 
 const openai = new OpenAI({
   apiKey: import.meta.env.VITE_OPENAI_API_KEY,
-  dangerouslyAllowBrowser: true, // Only for dev/testing in the browser
+  dangerouslyAllowBrowser: true,
 });
 
 export async function evaluateNote(noteText) {
@@ -13,7 +13,7 @@ export async function evaluateNote(noteText) {
     return {
       classification: "Unknown",
       explanation: "The input was too short or vague to analyze.",
-      doctor_advice: "Try describing your habit or environment in more detail.",
+      expert_advice: "Try describing your habit or environment in more detail.",
     };
   }
 
@@ -27,7 +27,7 @@ Respond ONLY in valid JSON using this format:
 {
   "classification": "Protective" | "Neutral" | "Harmful",
   "explanation": "Explain briefly why you classified it this way.",
-  "doctor_advice": "Give practical advice a good doctor might give."
+  "expert_advice": "Give practical advice a good expert might give."
 }
 `;
 
@@ -54,7 +54,7 @@ Respond ONLY in valid JSON using this format:
     return {
       classification: "Unknown",
       explanation: "Unable to parse AI output or the model didn't return JSON.",
-      doctor_advice: "Please consult a physician directly or try rewording your input.",
+      expert_advice: "Please consult a physician directly or try rewording your input.",
     };
   }
 }
