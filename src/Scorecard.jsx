@@ -72,7 +72,6 @@ export default function Scorecard({ responses, questions, noteSuggestions }) {
 
   useEffect(() => {
     const runAIAnalysis = async () => {
-      console.log("💬 noteSuggestions received:", noteSuggestions);
       if (!noteSuggestions || noteSuggestions.length === 0) return;
 
       const filtered = noteSuggestions.filter(
@@ -82,30 +81,25 @@ export default function Scorecard({ responses, questions, noteSuggestions }) {
           !["i", "yes", "no", "n/a"].includes(note.trim().toLowerCase())
       );
 
-      if (filtered.length === 0) {
-        console.warn("❌ All notes were too short or unhelpful.");
-        return;
-      }
+      if (filtered.length === 0) return;
 
       setIsLoadingAdvice(true);
       const results = await Promise.all(
         filtered.map(async (note) => {
           try {
-            console.log("🧠 Submitting to OpenAI:", note);
             const result = await evaluateNote(note);
             return { note, ...result };
           } catch (err) {
-            console.error("OpenAI call failed:", err);
             return {
               note,
               classification: "Unknown",
               explanation: "The model was unable to process this comment.",
-              doctor_advice: "Try rewording the input or consult a physician directly.",
+              expert_advice: "Try rewording the input or consult a physician directly.",
             };
           }
         })
       );
-
+      console.log("🧠 Final AI Advice:", results);
       setAiAdvice(results);
       setIsLoadingAdvice(false);
     };
@@ -221,7 +215,8 @@ export default function Scorecard({ responses, questions, noteSuggestions }) {
                 <br />
                 🔍 <em>{item.classification}</em> — {item.explanation}
                 <br />
-                🩺 <strong>Expert Advice:</strong> {item.doctor_advice}
+                🩺 <strong>Expert advice:</strong>{" "}
+                {item.expert_advice || item.doctor_advice || "Not available"}
               </li>
             ))}
           </ul>
